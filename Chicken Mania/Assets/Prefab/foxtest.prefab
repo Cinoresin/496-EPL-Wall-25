@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
       propertyPath: m_LocalPosition.x
@@ -90,6 +90,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
       insertIndex: -1
       addedObject: {fileID: -2706735249251186536}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1510121845670196452}
   m_SourcePrefab: {fileID: 100100000, guid: 744de06d4a0f21d4abc8be7fd5bc5f85, type: 3}
 --- !u!1 &1680277712845598054 stripped
 GameObject:
@@ -148,6 +151,7 @@ MonoBehaviour:
   foxSpeed: 5
   devourCooldown: 0
   devourSpreeCD: 0
+  Particles: {fileID: -7946023515151913674, guid: ed392309027100f48be246879fbad7bf, type: 3}
   directorRef: {fileID: 0}
   chickenTarget: {fileID: 0}
 --- !u!65 &-5177977783841890731
@@ -250,7 +254,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680277712845598054}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ba67d04e07d3491989322c6414feaf3, type: 3}
   m_Name: 
@@ -275,3 +279,46 @@ MonoBehaviour:
   minDistance: 1
   movementThreshold: 0.5
   direction: 0
+--- !u!114 &1510121845670196452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680277712845598054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ea9930ecb674732bee27116520fad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+  basicEditor: 1
+  generalProps: 0
+  limitsProps: 0
+  advancedProps: 0
+  minPointers: 0
+  maxPointers: 0
+  useSendMessage: 0
+  sendStateChangeMessages: 0
+  sendMessageTarget: {fileID: 0}
+  useUnityEvents: 0
+  sendStateChangeEvents: 0
+  requireGestureToFail: {fileID: 0}
+  friendlyGestures: []
+  OnTransformStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTransform:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTransformComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  type: 4
+  screenTransformThreshold: 0.1
+  minScreenPointsDistance: 0.5
+  projectionProps: 0
+  projection: 0
+  projectionPlaneNormal: {x: 0, y: 0, z: 1}

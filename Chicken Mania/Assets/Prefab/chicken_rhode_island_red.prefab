@@ -161,7 +161,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.553886, y: 2.5, z: 8.1272}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6797274517631408644}
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
-  foxDetectionRadius: 10
+  foxDetectionRadius: 0
   foxLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -280,6 +280,7 @@ MonoBehaviour:
   maxIdleTime: 3
   minPeckTime: 1
   maxPeckTime: 2
+  shopManager: {fileID: 0}
 --- !u!114 &-3015198837319516783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +356,7 @@ MonoBehaviour:
   OnTransformComplete:
     m_PersistentCalls:
       m_Calls: []
-  type: 7
+  type: 1
   screenTransformThreshold: 0.1
   minScreenPointsDistance: 0.5
   projectionProps: 0
