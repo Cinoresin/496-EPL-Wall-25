@@ -9,7 +9,10 @@ public class MusicHandler : MonoBehaviour
     public string[] trackCredits; // Corresponding credits for each track
 
     public MusicToggleSync musicToggleSync; // Reference to sync toggle across screens
-    public Text trackInfoText; 
+    public Text trackInfoText;
+
+    public Text trackTitleText;
+    public Text trackCreditText;
 
     private AudioSource audioSource;
     private int currentTrackIndex = -1;
@@ -90,21 +93,55 @@ public class MusicHandler : MonoBehaviour
     }
 
     // Get formatted track info
-    public string GetCurrentTrackInfo()
+    /*public string GetCurrentTrackInfo()
     {
         if (currentTrackIndex >= 0 && currentTrackIndex < bgmTracks.Length)
         {
             return $"Playing: {trackTitles[currentTrackIndex]} \nBy: {trackCredits[currentTrackIndex]}";
         }
         return "No Track Playing";
+    }*/
+
+    // Get the current track title
+    public string GetCurrentTrackTitle()
+    {
+        if (currentTrackIndex >= 0 && currentTrackIndex < bgmTracks.Length)
+        {
+            return $"{trackTitles[currentTrackIndex]}";
+        }
+        return "No Track Playing";
+    }
+
+    // Get the current track credit (artist & website)
+    public string GetCurrentTrackCredit()
+    {
+        if (currentTrackIndex >= 0 && currentTrackIndex < bgmTracks.Length)
+        {
+            return $"{trackCredits[currentTrackIndex]}";
+        }
+        return "No Track Playing";
     }
 
     // Update UI text with the current track info
-    void UpdateTrackUI()
+/*    void UpdateTrackUI()
     {
         if (trackInfoText != null)
         {
             trackInfoText.text = GetCurrentTrackInfo();
+        }
+    }*/
+
+    // Update UI with the song title and artist/website separately
+    void UpdateTrackUI()
+    {
+        if (trackTitleText != null)
+        {
+            trackTitleText.text = GetCurrentTrackTitle();
+        }
+
+        if (trackCreditText != null)
+        {
+            trackCreditText.text = GetCurrentTrackCredit();
         }
     }
 }
