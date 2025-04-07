@@ -1,5 +1,6 @@
 using UnityEngine;
 using TouchScript.Gestures;
+using System;
 
 public class ScreenController : MonoBehaviour
 {
@@ -23,7 +24,6 @@ public class ScreenController : MonoBehaviour
     private TapGesture tapGesture; // TouchScript's Tap Gesture
 
     public ShopManager shopManagerScript; // Reference to ShopManager script
-    public InactivityHandler InactivityScript; // Reference to InactivityHandler script
 
     public GameObject TimeMiddleLeft;
     public GameObject ProtectMiddleLeft;
@@ -90,6 +90,8 @@ public class ScreenController : MonoBehaviour
 
     public void StartGame()
     {
+        shopManagerScript.FoxDir.CancelInvoke("UpdateChickenList");
+        shopManagerScript.FoxDir.InvokeRepeating("UpdateChickenList", shopManagerScript.FoxDir.graceTime = 10, shopManagerScript.FoxDir.spawnTick = 10);
         startUI.SetActive(false);  // Hide start UI
         gameUI.SetActive(true);    // Show in-game UI
 
@@ -111,7 +113,7 @@ public class ScreenController : MonoBehaviour
         Middle_Left_Mania.SetActive(true);
         Middle_Left_Tycoon.SetActive(false);
 
-        InactivityScript.inactivityThreshold = 60f; //Time set to higher than the game's time mode
+        shopManagerScript.inactivityThreshold = 60f; //Time set to higher than the game's time mode
         shopManagerScript.timeToGrow = 10f;
         shopManagerScript.timeToSpawn = 10f;
 
@@ -141,6 +143,8 @@ public class ScreenController : MonoBehaviour
 
     public void StartTycoonGameMode()
     {
+        shopManagerScript.FoxDir.CancelInvoke("UpdateChickenList");
+        shopManagerScript.FoxDir.InvokeRepeating("UpdateChickenList", shopManagerScript.FoxDir.graceTime = 10, shopManagerScript.FoxDir.spawnTick = 10);
         startUI.SetActive(false);  // Hide start UI
         gameUI.SetActive(true);    // Show in-game UI
 
@@ -162,7 +166,7 @@ public class ScreenController : MonoBehaviour
         Middle_Left_Mania.SetActive(false);
         Middle_Left_Tycoon.SetActive(true);
 
-        InactivityScript.inactivityThreshold = 60f; //Time set to higher than the game's time mode
+        shopManagerScript.inactivityThreshold = 60f; //Time set to higher than the game's time mode
         shopManagerScript.timeToGrow = 10f;
         shopManagerScript.timeToSpawn = 6f;
 
@@ -202,6 +206,8 @@ public class ScreenController : MonoBehaviour
 
     public void TGameMode()
     {
+        shopManagerScript.FoxDir.CancelInvoke("UpdateChickenList");
+        shopManagerScript.FoxDir.InvokeRepeating("UpdateChickenList", shopManagerScript.FoxDir.graceTime = 15, shopManagerScript.FoxDir.spawnTick = 10);
         if (!gameModeStarted)
         {
             startUI.SetActive(false);  // Hide start UI
@@ -225,6 +231,7 @@ public class ScreenController : MonoBehaviour
             TimeMiddleLeft.SetActive(true);
             ProtectMiddleLeft.SetActive(false);
             shopManagerScript.StartCountdown();
+
             //shopManagerScript.Inventory[3, 9] = 2;  //DOESN'T SET INITIALLY
             shopManagerScript.timeToGrow = 7f;
             shopManagerScript.timeToSpawn = 7f;
@@ -232,7 +239,7 @@ public class ScreenController : MonoBehaviour
             shopManagerScript.FoxDir.spawnTick = 10;
             shopManagerScript.FoxDir.graceTime = 15;
             shopManagerScript.FoxDir.maxFoxes = 99;
-            InactivityScript.inactivityThreshold = 600f; //Time set to higher than the game's time mode
+            shopManagerScript.inactivityThreshold = 6000f; //Time set to higher than the game's time mode
             gameModeStarted = true;
         }
         /*
@@ -275,11 +282,10 @@ public class ScreenController : MonoBehaviour
             TimeMiddleLeft.SetActive(false);
             ProtectMiddleLeft.SetActive(true);
             shopManagerScript.StartCountdownPGM();
-
-            shopManagerScript.timeToSpawn = 600f;
+            shopManagerScript.timeToSpawn = 10000f;
             shopManagerScript.FoxDir.spawnTick = 10;
             shopManagerScript.FoxDir.maxFoxes = 99;
-            InactivityScript.inactivityThreshold = 600f; //Time set to higher than the game's time mode
+            shopManagerScript.inactivityThreshold = 6000f; //Time set to higher than the game's time mode
             gameModeStarted = true;
         }
 

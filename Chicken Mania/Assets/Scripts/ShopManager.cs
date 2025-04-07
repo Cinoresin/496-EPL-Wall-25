@@ -27,6 +27,8 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI Score;
     public TextMeshProUGUI tutorialTextPGM;
     public TextMeshProUGUI GameOverText;
+    public TextMeshProUGUI ShopMoneyText;
+    public TextMeshProUGUI ShopUpgradeText;
 
     //Chicken Species & Spawn
     public GameObject[] ChickenSpecies;
@@ -57,6 +59,8 @@ public class ShopManager : MonoBehaviour
     public float ChickValue = 0.5f;
     public float ChickenValue = 0.6f;
     public bool TycoonMode = false;
+    public GameObject HatchStartingMessage;
+    public GameObject DefendStartingMessage;
 
     private TapGesture tapGesture;
 
@@ -78,6 +82,19 @@ public class ShopManager : MonoBehaviour
     [Header("Theme Objects")]
     public GameObject ChristmasLights;
     public GameObject Jackolantern;
+
+    [Header("Inactivity Objects")]
+    public GameObject inactivityWarningGreen;
+    public GameObject inactivityWarningOrange;
+    public TextMeshProUGUI greenCountdownText;
+    public TextMeshProUGUI orangeCountdownText;
+    public GameObject hudObject; // Reference to the HUD object
+    public GameObject Screen;
+    public float inactivityThreshold = 60f; // Seconds before warning
+    public float returnToMenuTime = 30f;    // Seconds before message disappears
+    private float lastInteractionTime;
+    private float countdownTime;
+    private bool countdownStarted = false;
 
     void Start()
     {
@@ -193,10 +210,62 @@ public class ShopManager : MonoBehaviour
             Debug.LogError("Error occurred while checking the date: " + ex.Message);
         }
 
+        lastInteractionTime = Time.time;
+
+        if (inactivityWarningGreen != null)
+        {
+            inactivityWarningGreen.SetActive(false);
+        }
+        if (inactivityWarningOrange != null)
+        {
+            inactivityWarningOrange.SetActive(false);
+        }
+
+        RegisterTouchGestures();
     }
     void Update()
     {
         CheckGameOver();
+
+        //Inactivity Handler
+        // Check inactivity per instance
+        if (!countdownStarted && Time.time - lastInteractionTime > inactivityThreshold)
+        {
+            ShowInactivityWarning();
+        }
+
+        // Handle countdown per instance
+        if (countdownStarted)
+        {
+            countdownTime -= Time.deltaTime;
+            string countdownMessage = Mathf.Ceil(countdownTime) + "s";
+
+            if (inactivityWarningGreen != null && inactivityWarningGreen.activeSelf && greenCountdownText != null)
+            {
+                greenCountdownText.text = countdownMessage;
+            }
+
+            if (inactivityWarningOrange != null && inactivityWarningOrange.activeSelf && orangeCountdownText != null)
+            {
+                orangeCountdownText.text = countdownMessage;
+            }
+
+            if (countdownTime <= 0)
+            {
+                if (inactivityWarningGreen != null)
+                {
+                    inactivityWarningGreen.SetActive(false);
+                }
+
+                if (inactivityWarningOrange != null)
+                {
+                    inactivityWarningOrange.SetActive(false);
+                }
+
+                countdownStarted = false; // Reset so it can trigger again later
+                ResetGame();
+            }
+        }
     }
 
     protected virtual void OnMenuOpen(MenuOpenEventArgs e)
@@ -634,6 +703,8 @@ public class ShopManager : MonoBehaviour
         //EggsCount_Text.text = "Eggs: " + eggsCount;
 
         Money_Text.text = "$" + Money.ToString();
+        ShopMoneyText.text = "$" + Money.ToString();
+        ShopUpgradeText.text = "$" + Money.ToString();
     }
 
     /****************************************************************/
@@ -702,20 +773,25 @@ public class ShopManager : MonoBehaviour
     }
 
     /***************************************** Below handles Timer Mode *****************************************/
+
+    private Coroutine startingTimedModeCoroutine;
+    private Coroutine countdownRoutineCoroutine;
+    private Coroutine callResetTimerModeCoroutine;
     public void StartCountdown()
     {
-        StartCoroutine(StartingTimedMode());
+        startingTimedModeCoroutine = StartCoroutine(StartingTimedMode());
     }
     private IEnumerator StartingTimedMode()
     {
-        tutorialTextPGM.gameObject.SetActive(true);
+
         int timeLeft = 3; // Starting countdown
         while (timeLeft > 0)
         {
-            tutorialTextPGM.text = $"45 seconds to hatch the eggs!";
+            HatchStartingMessage.SetActive(true);
             yield return new WaitForSeconds(1f);
             timeLeft--;
         }
+        HatchStartingMessage.SetActive(false);
 
         // Randomly spawn 10 chickens
         for (int i = 0; i < 10; i++)  // need above small delay for fox director
@@ -727,6 +803,8 @@ public class ShopManager : MonoBehaviour
                 AddChicken();
             }
         }
+
+        tutorialTextPGM.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
         timeLeft = 5;
         while (timeLeft > 0)
@@ -739,7 +817,7 @@ public class ShopManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         tutorialTextPGM.gameObject.SetActive(false);
 
-        StartCoroutine(CountdownRoutine());
+        countdownRoutineCoroutine = StartCoroutine(CountdownRoutine());
     }
     private IEnumerator CountdownRoutine()
     {
@@ -834,21 +912,37 @@ public class ShopManager : MonoBehaviour
         }
 
         Score.gameObject.SetActive(true);
-        StartCoroutine(CallResetTimerMode());
+        callResetTimerModeCoroutine = StartCoroutine(CallResetTimerMode());
     }
 
     /***************************************************** Below handles Protect Game Mode ****************************************************/
+
+    private Coroutine startingDefendModeCoroutine;
+    private Coroutine startingCountDownCoroutine;
+    private Coroutine startingFoxSpawnCoroutine;
+
     public void StartCountdownPGM()
     {
-        StartCoroutine(StartingPGM());
+        startingDefendModeCoroutine = StartCoroutine(StartingPGM());
     }
     private IEnumerator StartingPGM()
     {
-        tutorialTextPGM.gameObject.SetActive(true);
-        int timeLeft = 5; // Starting countdown
+        FoxDir.devourCooldown = 1;
+        int timeLeft = 3; // Starting countdown
         while (timeLeft > 0)
         {
-            tutorialTextPGM.text = $"Protect the chicken from foxes! \nStarting in {timeLeft} seconds...";
+            DefendStartingMessage.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            timeLeft--;
+        }
+        DefendStartingMessage.SetActive(false);
+
+
+        tutorialTextPGM.gameObject.SetActive(true);
+        timeLeft = 5;
+        while (timeLeft > 0)
+        {
+            tutorialTextPGM.text = $"Starting in {timeLeft} seconds...";
             yield return new WaitForSeconds(1f);
             timeLeft--;
         }
@@ -863,8 +957,8 @@ public class ShopManager : MonoBehaviour
         NewChickenAI newChickenAI = lastSpawnedChicken.GetComponent<NewChickenAI>();
         newChickenAI.foxDetectionRadius = 0.6f;
 
-        StartCoroutine(CountdownRoutinePGM());
-        StartCoroutine(UpdateFoxesPer5ChickensRoutine());
+        startingCountDownCoroutine = StartCoroutine(CountdownRoutinePGM());
+        startingFoxSpawnCoroutine = StartCoroutine(UpdateFoxesPer5ChickensRoutine());
     }
 
     private IEnumerator CountdownRoutinePGM()
@@ -893,7 +987,7 @@ public class ShopManager : MonoBehaviour
                 for (int i = 0; i < foxesToSpawn; i++)
                 {
                     FoxDir.SpawnFox();
-                    yield return new WaitForSeconds(0.5f); // Small delay between each fox spawn (0.5 seconds)
+                    yield return new WaitForSeconds(0.4f); // Small delay between each fox spawn (0.5 seconds)
                 }
                 foxesToSpawn += 2;
             }
@@ -912,8 +1006,11 @@ public class ShopManager : MonoBehaviour
     void DisplayScorePGM()
     {
         CountdownText.gameObject.SetActive(false);
-        StopCoroutine(UpdateFoxesPer5ChickensRoutine());
-
+        if (startingFoxSpawnCoroutine != null)
+        {
+            StopCoroutine(startingFoxSpawnCoroutine);
+            startingFoxSpawnCoroutine = null;
+        }
         // Destroy objects on the screen section
         Transform screenSectionTransform = screenSection.transform;
         GameObject[] draggableObjects = screenSectionTransform.GetComponentsInChildren<Transform>()
@@ -942,7 +1039,7 @@ public class ShopManager : MonoBehaviour
         }
 
         Score.gameObject.SetActive(true);
-        StartCoroutine(CallResetTimerMode());
+        callResetTimerModeCoroutine = StartCoroutine(CallResetTimerMode());
     }
 
     private IEnumerator CallResetTimerMode()
@@ -976,8 +1073,8 @@ public class ShopManager : MonoBehaviour
         chickensCount = 0;
         chicksCount = 0;
         eggsCount = 0;
-        FoxDir.chickenList.Clear();
-        FoxDir.foxList.Clear();
+        FoxDir.devourCooldown = 5;
+
         //Resets Array's Upgrade Cost
         Inventory[2, 8] = 30;
         Inventory[2, 9] = 25;
@@ -996,12 +1093,11 @@ public class ShopManager : MonoBehaviour
         Inventory[3, 5] = 0;
         Inventory[3, 6] = 0;
         Inventory[3, 7] = 0;
-
-        ChristmasLights.SetActive(false);
-        Jackolantern.SetActive(false);
         
         GameOverWindow.SetActive(false);
         isGameOver = false;
+        ChristmasLights.SetActive(false);
+        Jackolantern.SetActive(false);
 
         Destroy(activeSellZone);
         activeSellZone = null;
@@ -1038,9 +1134,6 @@ public class ShopManager : MonoBehaviour
         GameObject[] foxesToDestroy = GameObject.FindGameObjectsWithTag("Fox_" + screenSection.name);
         foreach (GameObject fox in foxesToDestroy) { Destroy(fox); }
 
-        FoxDir.chickenList.Clear();
-        FoxDir.foxList.Clear();
-
         Money = 100;
         chickensCount = 0;
         chicksCount = 0;
@@ -1057,8 +1150,11 @@ public class ShopManager : MonoBehaviour
         Inventory[3, 10] = 0;
         Inventory[3, 11] = 0;
 
-        FoxDir.foxList.Clear();
         FoxDir.graceTime = 10;
+
+        HatchStartingMessage.SetActive(false);
+        DefendStartingMessage.SetActive(false);
+        tutorialTextPGM.gameObject.SetActive(false);
         ChristmasLights.SetActive(false);
         Jackolantern.SetActive(false);
 
@@ -1071,6 +1167,38 @@ public class ShopManager : MonoBehaviour
         StopCoroutine(StartingTimedMode());
         StopCoroutine(StartingPGM());
         UpdateTimerDisplay();
+
+        if (startingTimedModeCoroutine != null)
+        {
+            StopCoroutine(startingTimedModeCoroutine);
+            startingTimedModeCoroutine = null; 
+        }
+        if (countdownRoutineCoroutine != null)
+        {
+            StopCoroutine(countdownRoutineCoroutine);
+            countdownRoutineCoroutine = null;
+        }
+        
+        if (startingDefendModeCoroutine != null)
+        {
+            StopCoroutine(startingDefendModeCoroutine);
+            startingDefendModeCoroutine = null; 
+        }
+        if (startingCountDownCoroutine != null)
+        {
+            StopCoroutine(startingCountDownCoroutine);
+            startingCountDownCoroutine = null;
+        }
+        if (startingFoxSpawnCoroutine != null)
+        {
+            StopCoroutine(startingFoxSpawnCoroutine);
+            startingFoxSpawnCoroutine = null;
+        }
+        if (callResetTimerModeCoroutine != null)
+        {
+            StopCoroutine(callResetTimerModeCoroutine);
+            callResetTimerModeCoroutine = null;
+        }
 
         // Call the ReturnToTitlePage function
         if (screenController != null)
@@ -1110,6 +1238,95 @@ public class ShopManager : MonoBehaviour
     {
         TimedHomeButtonMenu.SetActive(false);
         OnMenuOpen(new MenuOpenEventArgs(false));
+    }
+
+    //Inactivity
+    private void RegisterTouchGestures()
+    {
+        if (Screen != null)
+        {
+            TapGesture tapGesture = Screen.GetComponent<TapGesture>();
+            PressGesture pressGesture = Screen.GetComponent<PressGesture>();
+
+            if (tapGesture != null)
+            {
+                tapGesture.Tapped += OnUserActivity;
+            }
+
+            if (pressGesture != null)
+            {
+                pressGesture.Pressed += OnUserActivity;
+            }
+        }
+
+        if (hudObject != null)
+        {
+            TapGesture tapGesture = hudObject.GetComponent<TapGesture>();
+            PressGesture pressGesture = hudObject.GetComponent<PressGesture>();
+
+            if (tapGesture != null)
+            {
+                tapGesture.Tapped += OnUserActivity;
+            }
+
+            if (pressGesture != null)
+            {
+                pressGesture.Pressed += OnUserActivity;
+            }
+        }
+
+    }
+
+    private void OnUserActivity(object sender, System.EventArgs e)
+    {
+        ResetInactivityTimer();
+    }
+
+    public void ResetInactivityTimer()
+    {
+        lastInteractionTime = Time.time;
+
+        if (inactivityWarningGreen != null)
+        {
+            inactivityWarningGreen.SetActive(false);
+        }
+
+        if (inactivityWarningOrange != null)
+        {
+            inactivityWarningOrange.SetActive(false);
+        }
+
+        countdownStarted = false;
+    }
+
+    private void ShowInactivityWarning()
+    {
+        if (!countdownStarted)
+        {
+            bool showGreen = Random.value < 0.5f;
+
+            if (showGreen && inactivityWarningGreen != null)
+            {
+                inactivityWarningGreen.SetActive(true);
+
+                if (inactivityWarningOrange != null)
+                {
+                    inactivityWarningOrange.SetActive(false);
+                }
+            }
+            else if (!showGreen && inactivityWarningOrange != null)
+            {
+                inactivityWarningOrange.SetActive(true);
+
+                if (inactivityWarningGreen != null)
+                {
+                    inactivityWarningGreen.SetActive(false);
+                }
+            }
+
+            countdownStarted = true;
+            countdownTime = returnToMenuTime;
+        }
     }
 }
 
