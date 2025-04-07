@@ -1,5 +1,6 @@
 using UnityEngine;
 using TouchScript.Gestures;
+using System;
 
 public class ScreenController : MonoBehaviour
 {
@@ -230,6 +231,7 @@ public class ScreenController : MonoBehaviour
             TimeMiddleLeft.SetActive(true);
             ProtectMiddleLeft.SetActive(false);
             shopManagerScript.StartCountdown();
+
             //shopManagerScript.Inventory[3, 9] = 2;  //DOESN'T SET INITIALLY
             shopManagerScript.timeToGrow = 7f;
             shopManagerScript.timeToSpawn = 7f;
@@ -280,7 +282,6 @@ public class ScreenController : MonoBehaviour
             TimeMiddleLeft.SetActive(false);
             ProtectMiddleLeft.SetActive(true);
             shopManagerScript.StartCountdownPGM();
-
             shopManagerScript.timeToSpawn = 10000f;
             shopManagerScript.FoxDir.spawnTick = 10;
             shopManagerScript.FoxDir.maxFoxes = 99;

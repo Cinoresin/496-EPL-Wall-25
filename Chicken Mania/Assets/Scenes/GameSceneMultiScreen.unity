@@ -2721,7 +2721,7 @@ GameObject:
   - component: {fileID: 74526499}
   - component: {fileID: 74526501}
   - component: {fileID: 74526500}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14741,6 +14741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorRed
       objectReference: {fileID: 0}
+    - target: {fileID: 6514367176988054151, guid: 625d7573d638adb43be4a3d78c373ef5, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15754,6 +15758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bell unityanimation
       objectReference: {fileID: 0}
+    - target: {fileID: 2325296439072546808, guid: 50e724374349b684b80c4b153acc597a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3102641931811161410, guid: 50e724374349b684b80c4b153acc597a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.3209991
@@ -16447,6 +16455,10 @@ PrefabInstance:
     - target: {fileID: 2325296439072546808, guid: 50e724374349b684b80c4b153acc597a, type: 3}
       propertyPath: m_Name
       value: bell unityanimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325296439072546808, guid: 50e724374349b684b80c4b153acc597a, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3102641931811161410, guid: 50e724374349b684b80c4b153acc597a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21736,6 +21748,10 @@ PrefabInstance:
     - target: {fileID: 6514367176988054151, guid: 625d7573d638adb43be4a3d78c373ef5, type: 3}
       propertyPath: m_Name
       value: DoorRed
+      objectReference: {fileID: 0}
+    - target: {fileID: 6514367176988054151, guid: 625d7573d638adb43be4a3d78c373ef5, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27463,7 +27479,7 @@ GameObject:
   - component: {fileID: 656162029}
   - component: {fileID: 656162031}
   - component: {fileID: 656162030}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34458,6 +34474,10 @@ PrefabInstance:
     - target: {fileID: 598580535187523105, guid: c149a2eb7827f3c4d8ccee1457462150, type: 3}
       propertyPath: m_Name
       value: DoorBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 598580535187523105, guid: c149a2eb7827f3c4d8ccee1457462150, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59737,6 +59757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 598580535187523105, guid: c149a2eb7827f3c4d8ccee1457462150, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -75942,6 +75966,10 @@ PrefabInstance:
     - target: {fileID: 2325296439072546808, guid: 50e724374349b684b80c4b153acc597a, type: 3}
       propertyPath: m_Name
       value: bell unityanimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325296439072546808, guid: 50e724374349b684b80c4b153acc597a, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3102641931811161410, guid: 50e724374349b684b80c4b153acc597a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -99318,6 +99346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorRed
       objectReference: {fileID: 0}
+    - target: {fileID: 6514367176988054151, guid: 625d7573d638adb43be4a3d78c373ef5, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -104527,6 +104559,10 @@ PrefabInstance:
     - target: {fileID: 598580535187523105, guid: c149a2eb7827f3c4d8ccee1457462150, type: 3}
       propertyPath: m_Name
       value: DoorBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 598580535187523105, guid: c149a2eb7827f3c4d8ccee1457462150, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
