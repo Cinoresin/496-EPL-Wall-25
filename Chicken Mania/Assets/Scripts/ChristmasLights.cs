@@ -19,11 +19,14 @@ public class ChristmasLights : MonoBehaviour
 
     private Renderer redRenderer, blueRenderer, greenRenderer;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(FlashLights());
     }
-
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
     private IEnumerator FlashLights()
     {
         while (true)

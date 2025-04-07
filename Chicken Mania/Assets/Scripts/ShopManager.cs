@@ -210,7 +210,6 @@ public class ShopManager : MonoBehaviour
             Debug.LogError("Error occurred while checking the date: " + ex.Message);
         }
 
-
         lastInteractionTime = Time.time;
 
         if (inactivityWarningGreen != null)
@@ -1097,6 +1096,8 @@ public class ShopManager : MonoBehaviour
         
         GameOverWindow.SetActive(false);
         isGameOver = false;
+        ChristmasLights.SetActive(false);
+        Jackolantern.SetActive(false);
 
         Destroy(activeSellZone);
         activeSellZone = null;
@@ -1154,6 +1155,8 @@ public class ShopManager : MonoBehaviour
         HatchStartingMessage.SetActive(false);
         DefendStartingMessage.SetActive(false);
         tutorialTextPGM.gameObject.SetActive(false);
+        ChristmasLights.SetActive(false);
+        Jackolantern.SetActive(false);
 
         //Reset UI elements
         UpdateUI();
