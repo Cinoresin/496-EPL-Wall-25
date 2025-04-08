@@ -116,6 +116,7 @@ public class NewEggSpawner : MonoBehaviour
             FoxDir.setupNewEdible(newEgg, shopManager, FoxDir, "EGG");
             newEgg.GetComponent<ClicktoHatch>().FoxDir = FoxDir;
             newEgg.GetComponent<ClicktoHatch>().shopManager = shopManager;
+            newEgg.GetComponent<ClicktoHatch>().UpdateClicks();
 
             shopManager.EggDecay.edibleList.Add(newEgg.GetComponent<Edible>());
         }

@@ -26,11 +26,14 @@ public class ClicktoHatch : MonoBehaviour
         TapGesture tapGesture = gameObject.AddComponent<TapGesture>();
         tapGesture.Tapped += OnTouchTap;
     }
-
+    public void UpdateClicks()
+    {
+        hatchCountdown = 5 - shopManager.Inventory[3, 10];
+    }
     private void OnTouchTap(object sender, System.EventArgs e)
     {
-        // When the object is tapped, reduce the countdown
-        hatchCountdown -= 1 + shopManager.Inventory[3, 10];
+        hatchCountdown -= 1;
+
         shopManager.ResetInactivityTimer();
         GetComponent<AnimatedEgg>().RegisterTap();
     }
