@@ -19,6 +19,10 @@ public class WinConditionHandler : MonoBehaviour
             winMessageUI.SetActive(false);
         }
     }
+    private void OnEnable()
+    {
+        hasWon = false;
+    }
 
     private void Update()
     {
