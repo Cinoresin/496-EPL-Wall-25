@@ -29,6 +29,8 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI GameOverText;
     public TextMeshProUGUI ShopMoneyText;
     public TextMeshProUGUI ShopUpgradeText;
+    public TextMeshProUGUI HatchScoreMessage;
+
 
     //Chicken Species & Spawn
     public GameObject[] ChickenSpecies;
@@ -78,6 +80,14 @@ public class ShopManager : MonoBehaviour
     // Pause Broadcast
     public delegate void MenuOpenEventHandler(object sender, MenuOpenEventArgs e);
     public event MenuOpenEventHandler MenuOpen;
+
+    [Header("Scoreboard")]
+    public GameObject HatchScore;
+    public GameObject Hatch1;
+    public GameObject Hatch2;
+    public GameObject Hatch3;
+    public GameObject Hatch4;
+    public GameObject Hatch5;
 
     [Header("Theme Objects")]
     public GameObject ChristmasLights;
@@ -761,6 +771,7 @@ public class ShopManager : MonoBehaviour
     {
         ResetTimerMode();
         Score.gameObject.SetActive(false);
+        HatchScoreMessage.gameObject.SetActive(false);
     }
     private void ShowMoneyIndicator(int moneyEarned, GameObject buttonRef)
     {
@@ -849,10 +860,10 @@ public class ShopManager : MonoBehaviour
     {
         CountdownText.gameObject.SetActive(false);
 
-        int Davin = 86;
-        int placeholder1 = 70;
-        int placeholder2 = 60;
-        int placeholder3 = 50;
+        int Mark = 97;
+        int Davin = 77;
+        int Nataly = 68;
+        int De = 59;
         int totalScore = chickensCount + chicksCount + eggsCount;
 
         // Destroy objects on the screen section
@@ -875,43 +886,34 @@ public class ShopManager : MonoBehaviour
         if (chickensCount == 0 && chicksCount == 0 && eggsCount == 0)
         {
             Score.text = $"\nYou lost all your chickens!";
+            Score.gameObject.SetActive(true);
         }
         else
         {
-            if (totalScore > Davin)
+            HatchScoreMessage.text = $"{totalScore}";
+            HatchScore.SetActive(true);
+            HatchScoreMessage.gameObject.SetActive(true);
+            if (totalScore > Mark)
             {
-                Score.text = $"Time's up!\nYour Score: {totalScore}!\nPlaces you...\n1. YOU: {totalScore}.\n" +
-                              $"2. Davin: {Davin}\n3. placeholder1: {placeholder1}\n" +
-                              $"4. placeholder2: {placeholder2}\n5. placeholder3: {placeholder3}";
-                // Display Confetti?
+                Hatch1.SetActive(true);
             }
-            else if (totalScore > placeholder1 && totalScore <= Davin)
+            else if (totalScore > Davin && totalScore <= Mark)
             {
-                Score.text = $"Time's up!\nYour Score: {totalScore}!\nPlaces you...\n1. Davin: {Davin}\n" +
-                              $"2. YOU: {totalScore}\n3. placeholder1: {placeholder1}\n" +
-                              $"4. placeholder2: {placeholder2}\n5. placeholder3: {placeholder3}";
+                Hatch2.SetActive(true);
             }
-            else if (totalScore > placeholder2 && totalScore <= placeholder1)
+            else if (totalScore > Nataly && totalScore <= Davin)
             {
-                Score.text = $"Time's up!\nYour Score: {totalScore}!\nPlaces you...\n1. Davin: {Davin}\n" +
-                              $"2. placeholder1: {placeholder1}\n3. YOU: {totalScore}\n" +
-                              $"4. placeholder2: {placeholder2}\n5. placeholder3: {placeholder3}";
+                Hatch3.SetActive(true);
             }
-            else if (totalScore > placeholder3 && totalScore <= placeholder2)
+            else if (totalScore > De && totalScore <= Nataly)
             {
-                Score.text = $"Time's up!\nYour Score: {totalScore}!\nPlaces you...\n1. Davin: {Davin}\n" +
-                              $"2. placeholder1: {placeholder1}\n3. placeholder2: {placeholder2}\n" +
-                              $"4. YOU: {totalScore}\n5. placeholder3: {placeholder3}";
+                Hatch4.SetActive(true);
             }
             else
             {
-                Score.text = $"Time's up!\nYour Score: {totalScore}!\nPlaces you...\n1. Davin: {Davin}\n" +
-                              $"2. placeholder1: {placeholder1}\n3. placeholder2: {placeholder2}\n" +
-                              $"4. placeholder3: {placeholder3}\n5. YOU: {totalScore}";
+                Hatch5.SetActive(true);
             }
         }
-
-        Score.gameObject.SetActive(true);
         callResetTimerModeCoroutine = StartCoroutine(CallResetTimerMode());
     }
 
@@ -1157,11 +1159,19 @@ public class ShopManager : MonoBehaviour
         tutorialTextPGM.gameObject.SetActive(false);
         ChristmasLights.SetActive(false);
         Jackolantern.SetActive(false);
+        HatchScore.SetActive(false);
+        Hatch1.SetActive(false);
+        Hatch2.SetActive(false);
+        Hatch3.SetActive(false);
+        Hatch4.SetActive(false);
+        Hatch5.SetActive(false);
+
 
         //Reset UI elements
         UpdateUI();
         CountdownText.gameObject.SetActive(false);
         Score.gameObject.SetActive(false);
+        HatchScoreMessage.gameObject.SetActive(false);
         StopCoroutine(CallResetTimerMode());
         StopCoroutine(CountdownRoutine());
         StopCoroutine(StartingTimedMode());
