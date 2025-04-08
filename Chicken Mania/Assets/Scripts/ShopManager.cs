@@ -54,7 +54,7 @@ public class ShopManager : MonoBehaviour
     public float timeToGrow = 10f;
     public float timeToSpawn = 10f;
     public float FoxDetection = 0f;
-    public int GoldEggChance = 2;
+    public int GoldEggChance = 100;
     public GameObject lastSpawnedChicken;
     public GameObject moneyIndicator;
     public float EggValue = 0.25f;
