@@ -51,7 +51,7 @@ public class DarkenButtonImage : MonoBehaviour
                     isActive = shopManager.SettingsButtonMenuMania != null && shopManager.SettingsButtonMenuMania.activeSelf;
                     break;
                 case ButtonType.TycoonSettings:
-                    isActive = shopManager.SettingsButtonMenuTycoon != null && shopManager.SettingsButtonMenuMania.activeSelf;
+                    isActive = shopManager.SettingsButtonMenuTycoon != null && shopManager.SettingsButtonMenuTycoon.activeSelf;
                     break;
                 case ButtonType.Home:
                     isActive = shopManager.HomeButtonMenu != null && shopManager.HomeButtonMenu.activeSelf;
