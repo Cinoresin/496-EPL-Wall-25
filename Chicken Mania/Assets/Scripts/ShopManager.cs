@@ -666,7 +666,7 @@ public class ShopManager : MonoBehaviour
     }
     public void SellChick()
     {
-        if (eggsCount > 0)
+        if (chicksCount > 0)
         {
             chicksCount--;
             UpdateUI();
@@ -691,7 +691,7 @@ public class ShopManager : MonoBehaviour
     }
     public void LoseChick()
     {
-        if (eggsCount > 0)
+        if (chicksCount > 0)
         {
             chicksCount--;
             UpdateUI();
