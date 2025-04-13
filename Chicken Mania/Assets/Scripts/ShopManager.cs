@@ -741,10 +741,11 @@ public class ShopManager : MonoBehaviour
     {
         CloseAllWindows();
         isGameOver = true;
+        ResetInactivityTimer();
         if (GameOverWindow != null)
         {
             GameOverWindow.SetActive(true);
-            int timeLeft = 30;
+            int timeLeft = 20;
             while(timeLeft > -1)
             {
                 GameOverText.text = $"You have no more money to buy Chickens!\r\nYou have 0 Chickens!\r\nReturning to Main Menu in {timeLeft} seconds...";
