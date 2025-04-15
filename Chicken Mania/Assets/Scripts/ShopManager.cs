@@ -83,11 +83,6 @@ public class ShopManager : MonoBehaviour
 
     [Header("Scoreboard")]
     public GameObject HatchScore;
-    public GameObject Hatch1;
-    public GameObject Hatch2;
-    public GameObject Hatch3;
-    public GameObject Hatch4;
-    public GameObject Hatch5;
 
     [Header("Theme Objects")]
     public GameObject ChristmasLights;
@@ -861,10 +856,6 @@ public class ShopManager : MonoBehaviour
     {
         CountdownText.gameObject.SetActive(false);
 
-        int Mark = 97;
-        int Davin = 77;
-        int Nataly = 68;
-        int De = 59;
         int totalScore = chickensCount + chicksCount + eggsCount;
 
         // Destroy objects on the screen section
@@ -894,26 +885,6 @@ public class ShopManager : MonoBehaviour
             HatchScoreMessage.text = $"{totalScore}";
             HatchScore.SetActive(true);
             HatchScoreMessage.gameObject.SetActive(true);
-            if (totalScore > Mark)
-            {
-                Hatch1.SetActive(true);
-            }
-            else if (totalScore > Davin && totalScore <= Mark)
-            {
-                Hatch2.SetActive(true);
-            }
-            else if (totalScore > Nataly && totalScore <= Davin)
-            {
-                Hatch3.SetActive(true);
-            }
-            else if (totalScore > De && totalScore <= Nataly)
-            {
-                Hatch4.SetActive(true);
-            }
-            else
-            {
-                Hatch5.SetActive(true);
-            }
         }
         callResetTimerModeCoroutine = StartCoroutine(CallResetTimerMode());
     }
@@ -1161,11 +1132,6 @@ public class ShopManager : MonoBehaviour
         ChristmasLights.SetActive(false);
         Jackolantern.SetActive(false);
         HatchScore.SetActive(false);
-        Hatch1.SetActive(false);
-        Hatch2.SetActive(false);
-        Hatch3.SetActive(false);
-        Hatch4.SetActive(false);
-        Hatch5.SetActive(false);
 
 
         //Reset UI elements
